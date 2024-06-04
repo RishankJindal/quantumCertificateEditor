@@ -16,6 +16,7 @@ def main():
 
         # Getting list of pdf files present
         pdf_files = get_pdf_files(PDF_DIR_PATH)
+        unedited_pdf_count = 0
 
         if not pdf_files:
             print("No PDF files found in the directory.")
@@ -29,7 +30,11 @@ def main():
 
                 image_path = f"{TEMP_QR_PATH}/qr_{pdf_file}.png"
                 prev_qr_data = scan_data_from_qr(image_path=image_path)
-                modified_qr_data = modify_qr_data(prev_qr_data)
+                modified_qr_data = modify_qr_data(prev_qr_data,pdf_file,unedited_pdf_count)
+                if not modified_qr_data['data']:
+                    unedited_pdf_count = modified_qr_data['unedited_pdf_count']
+                    print(f"Failed to edit pdf -> {modified_qr_data['file_name']}")
+                    continue
                 new_qr_img_path = generate_new_qr(modified_qr_data, pdf_file)
 
                 pdf_path = f"{TEMP_PDF_PATH}/changed_name_{pdf_file}"
@@ -42,7 +47,10 @@ def main():
         clear_files_and_folders(TEMP_QR_PATH)
         clear_files_and_folders(TEMP_PDF_PATH)
 
-        print('''Editing completed 😁
+        print(f"\nTotal number of unedited files - {unedited_pdf_count}")
+
+        print('''
+Editing completed 😁
               ''')
 
     except Exception as e:

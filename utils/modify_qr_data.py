@@ -18,7 +18,7 @@ def modify_certificate_number(cert_no):
     modified_cert_no = cert_no[:position] + new_digits[position:position + change_length] + cert_no[position + change_length:]
     return modified_cert_no
 
-def modify_qr_data(data):
+def modify_qr_data(data,pdfFile,count):
     # Use regular expressions to extract the information
     pattern = re.compile(r"Certificate No\. - (\d+) Name - (.+?) Event - (.+)")
     # Match the pattern in the data string
@@ -42,8 +42,8 @@ def modify_qr_data(data):
 
         # Convert dictionary back to string
         data_string = ' '.join([f"{key} - {value}" for key, value in info_dict.items()])
-        return data_string
+        return {'data':data_string,'unedited_pdf_count':0}
     else:
-        print("Pattern not found in the data")
-
+        count+=1
+        return {'data': None,'unedited_pdf_count':count,'file_name':pdfFile}
 
