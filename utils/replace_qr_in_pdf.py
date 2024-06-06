@@ -2,6 +2,9 @@ import fitz  # PyMuPDF
 import io
 from PIL import Image
 
+from utils.clear_files_and_folders import clear_files_and_folders
+from utils.constants import MODIFIED_PDF_PATH
+
 def replace_qr_in_pdf(pdf_path, image_path, output_path):
     # Open the PDF file
     pdf_document = fitz.open(pdf_path)

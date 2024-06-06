@@ -1,5 +1,5 @@
 from utils.clear_files_and_folders import clear_files_and_folders
-from utils.constants import MODIFIED_PDF_PATH, PDF_DIR_PATH, TEMP_PDF_PATH, TEMP_QR_PATH
+from utils.constants import MODIFIED_PDF_PATH, NEW_NAME, PDF_DIR_PATH, TEMP_PDF_PATH, TEMP_QR_PATH
 from utils.change_name_in_pdf import change_name_in_pdf
 from utils.extract_qr_from_pdf import extract_qr_from_pdf
 from utils.generate_new_qr import generate_new_qr
@@ -21,6 +21,8 @@ def main():
         if not pdf_files:
             print("No PDF files found in the directory.")
             return
+        
+        clear_files_and_folders(MODIFIED_PDF_PATH)
 
         # Iterate over each pdf file
         for pdf_file in pdf_files:
@@ -38,8 +40,8 @@ def main():
                 new_qr_img_path = generate_new_qr(modified_qr_data, pdf_file)
 
                 pdf_path = f"{TEMP_PDF_PATH}/changed_name_{pdf_file}"
-                output_path = f"{MODIFIED_PDF_PATH}/{pdf_file}"
-                replace_qr_in_pdf(pdf_path, new_qr_img_path, output_path)
+                output_file_path = f"{MODIFIED_PDF_PATH}/{NEW_NAME} 0{pdf_files.index(pdf_file)+1}.pdf"
+                replace_qr_in_pdf(pdf_path, new_qr_img_path, output_file_path)
 
             except Exception as e:
                 print(f"Error occurred while processing {pdf_file}: {e}")

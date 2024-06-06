@@ -16,7 +16,7 @@ def generate_new_qr(data, pdfFile, output_path=f"{TEMP_QR_PATH}"):
         box_size=10,
         border=4,
     )
-    qr.add_data(data)
+    qr.add_data(data['data'])
     qr.make(fit=True)
 
     # Create an image from the QR Code instance
