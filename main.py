@@ -4,6 +4,7 @@ from utils.change_name_in_pdf import change_name_in_pdf
 from utils.extract_qr_from_pdf import extract_qr_from_pdf
 from utils.generate_new_qr import generate_new_qr
 from utils.get_pdf_files import get_pdf_files
+from utils.merge_pdf_files import merge_pdfs
 from utils.modify_qr_data import modify_qr_data
 from utils.replace_qr_in_pdf import replace_qr_in_pdf
 from utils.scan_data_from_qr import scan_data_from_qr
@@ -50,6 +51,10 @@ def main():
         clear_files_and_folders(TEMP_PDF_PATH)
 
         print(f"\nTotal number of unedited files - {unedited_pdf_count}")
+
+        print("\nMerging edited pdfs...")
+        merge_pdfs(MODIFIED_PDF_PATH, f"{MODIFIED_PDF_PATH}/{NEW_NAME}_MERGED.pdf")
+        print('\nPDFs mereged successfully! 😊')
 
         print('''
 Editing completed 😁
