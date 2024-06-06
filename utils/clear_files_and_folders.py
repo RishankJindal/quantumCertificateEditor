@@ -14,8 +14,11 @@ def clear_files_and_folders(folder_path):
     for file_path in folder_path.glob('*'):
         try:
             if file_path.is_file():
-                logging.debug(f"Removing file: {file_path}")
-                file_path.unlink()  # Remove the file
+                if file_path.name != ".gitkeep":  # Check if file is not .gitkeep
+                    logging.debug(f"Removing file: {file_path}")
+                    file_path.unlink()  # Remove the file
+                else:
+                    logging.debug(f"Not deleting .gitkeep file: {file_path}")
             elif file_path.is_dir():
                 logging.debug(f"Removing directory: {file_path}")
                 with file_path.rmdir() as dir_removed:
